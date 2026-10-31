@@ -1,0 +1,1850 @@
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+:root {
+    color-scheme: light;
+    scroll-behavior: smooth;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    text-align: right;
+}
+
+.wrapper {
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 57px);
+}
+
+.main-footer {
+    margin-top: auto;
+}
+
+.heading-font {
+    font-family: 'Aref Ruqaa Ink', serif;
+}
+
+/* Existing appointment image zoom. Parallax uses CSS translate separately. */
+.appointment-image {
+    animation: zoomLoop 16s ease-in-out infinite alternate;
+    translate: 0 var(--parallax-y, 0px);
+}
+
+@keyframes zoomLoop {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+}
+
+/* =========================================
+   SERVICE / APPOINTMENT CARDS (existing)
+========================================= */
+
+.service-card,
+.appointment-card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease, filter .8s ease;
+    transform: scale(1);
+}
+
+.service-card .overlay {
+    position: absolute;
+    inset: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(69, 35, 29, .45);
+    transition: background .5s ease;
+}
+
+.service-card:hover img {
+    transform: scale(1.12);
+}
+
+.service-card:hover .overlay {
+    background: rgba(69, 35, 29, .70);
+}
+
+.overlay h3 {
+    font-size: 26px;
+    font-family: cursive;
+    font-weight: 400;
+    transition: transform .4s ease;
+}
+
+.overlay span {
+    margin-top: 10px;
+    font-size: 22px;
+    transition: transform .4s ease;
+}
+
+.service-card:hover h3 {
+    transform: translateY(-8px);
+}
+
+.service-card:hover span {
+    transform: translateY(6px);
+}
+
+.appointment-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #5a3026;
+    color: #d2a083;
+    text-decoration: none;
+    transition: background .4s ease, transform .4s ease, box-shadow .4s ease;
+}
+
+.appointment-card:hover {
+    background: #6c392d;
+    transform: scale(1.05);
+    box-shadow: 0 14px 30px rgba(90, 48, 38, .18);
+}
+
+.appointment-card span {
+    font-size: 26px;
+    font-family: cursive;
+    line-height: 1.2;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .service-card,
+    .appointment-card {
+        width: 240px;
+        height: 240px;
+    }
+
+    .overlay h3 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card,
+    .appointment-card {
+        width: 220px;
+        height: 220px;
+    }
+
+    .overlay h3 {
+        font-size: 32px;
+    }
+
+    .overlay span {
+        font-size: 18px;
+    }
+
+    .appointment-card span {
+        font-size: 34px;
+    }
+}
+
+@media (max-width: 500px) {
+    .service-card,
+    .appointment-card {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* =========================================
+   TESTIMONIAL SWIPER (existing)
+========================================= */
+
+.testimonialSwiper {
+    width: 100%;
+    padding-inline: 90px;
+}
+
+.testimonialSwiper .swiper-wrapper .swiper-slide {
+    display: flex;
+    background: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonialSwiper .testimonial-prev,
+.testimonialSwiper .testimonial-next {
+    transition: transform .3s ease;
+}
+
+.testimonialSwiper .testimonial-prev:hover,
+.testimonialSwiper .testimonial-next:hover {
+    transform: translateY(-50%) scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .testimonialSwiper {
+        padding-inline: 20px;
+    }
+
+    .testimonial-prev,
+    .testimonial-next {
+        display: none;
+    }
+
+    .testimonialSwiper p {
+        font-size: 20px;
+    }
+}
+
+/* =========================================
+   APPOINTMENT INPUTS (existing + focus polish)
+========================================= */
+
+@layer components {
+    .appointment-input {
+        @apply w-full border border-gray-300 rounded px-4 py-3 outline-none transition focus:border-[#5b3025] focus:ring-2 focus:ring-[#c98a6a]/30;
+        transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease;
+    }
+
+    .appointment-input:focus {
+        box-shadow: 0 0 0 4px rgba(201, 138, 106, .14);
+    }
+}
+
+#booking button[type="submit"],
+#appointment button[type="submit"],
+#booking input[type="submit"],
+#appointment input[type="submit"] {
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+#booking button[type="submit"]:hover,
+#appointment button[type="submit"]:hover,
+#booking input[type="submit"]:hover,
+#appointment input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(91, 48, 37, .16);
+}
+
+#booking button[type="submit"]:active,
+#appointment button[type="submit"]:active {
+    transform: scale(.98);
+}
+
+/* =========================================
+   PRICING (existing)
+========================================= */
+
+.price-tab {
+    width: 120px;
+    height: 55px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.price-tab img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.price-tab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(50, 20, 15, .55);
+}
+
+.price-tab span {
+    position: relative;
+    z-index: 5;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.price-tab.active {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(91, 48, 37, .18);
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px dotted #cfcfcf;
+    transition: background-color .3s ease, padding-inline .3s ease;
+}
+
+.price-row:hover {
+    background: rgba(201, 138, 106, .06);
+    padding-inline: 10px;
+}
+
+.price-info h4 {
+    color: #5b3025;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.price-info p {
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+}
+
+.price {
+    color: #111;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+@media (max-width: 768px) {
+    .price-tab {
+        width: 95px;
+        height: 50px;
+    }
+
+    #priceTitle {
+        font-size: 42px;
+    }
+
+    .price-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .price {
+        font-size: 20px;
+    }
+}
+
+/* =========================================
+   NAVBAR: COMPACT MOBILE + SCROLL STATE
+========================================= */
+
+#navbar {
+    isolation: isolate;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+
+#navbar .navbar-container {
+    position: relative;
+    z-index: 10002;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    transition: padding .3s ease;
+}
+
+#navbar .logo {
+    height: 48px;
+    max-width: min(42vw, 180px);
+}
+
+#navbar .logo-fallback {
+    font-size: 22px;
+}
+
+#navbar.is-scrolled,
+#navbar.is-auth-page,
+#navbar.menu-open {
+    background: rgba(255, 255, 255, .97) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+    color: #111827 !important;
+}
+
+#navbar.is-scrolled .logo-fallback,
+#navbar.is-auth-page .logo-fallback,
+#navbar.menu-open .logo-fallback {
+    color: #5b3025;
+}
+
+#navbar.is-scrolled #list,
+#navbar.is-auth-page #list,
+#navbar.menu-open #list {
+    color: #111827;
+}
+
+#navbar.is-scrolled #menuBtn,
+#navbar.is-auth-page #menuBtn,
+#navbar.menu-open #menuBtn {
+    color: #5b3025 !important;
+}
+
+#navbar #list a,
+#navbar #list button {
+    transition: color .2s ease;
+}
+
+#navbar #list a:hover,
+#navbar #list button:hover {
+    color: #b9866d;
+}
+
+#menuIcon {
+    display: inline-block;
+    transition: transform .3s ease;
+}
+
+#navbar.menu-open #menuIcon {
+    transform: rotate(90deg);
+}
+
+@media (min-width: 1024px) {
+    #navbar .navbar-container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        min-height: 76px;
+    }
+
+    #navbar .logo {
+        height: 54px;
+        max-width: 190px;
+    }
+
+    #navbar.is-scrolled .navbar-container {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        min-height: 64px;
+    }
+
+    #navbar.is-scrolled .logo {
+        height: 46px;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+    #navbar .logo {
+        height: 56px;
+    }
+}
+
+@media (max-width: 380px) {
+    #navbar .logo {
+        height: 42px;
+    }
+}
+
+/* =========================================
+   MOBILE MENU: SLIDE FROM TOP + STAGGER
+========================================= */
+
+#mobileMenu {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    z-index: 10001;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fff;
+    padding: 0 24px;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        transform 650ms cubic-bezier(.22, 1, .36, 1),
+        opacity 450ms ease,
+        visibility 0s linear 650ms;
+}
+
+#mobileMenu.hidden {
+    display: none !important;
+}
+
+#mobileMenu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        transform 650ms cubic-bezier(.22, 1, .36, 1),
+        opacity 450ms ease,
+        visibility 0s;
+}
+
+#mobileMenu > ul {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-top: calc(85px + env(safe-area-inset-top));
+    padding-bottom: calc(30px + env(safe-area-inset-bottom));
+}
+
+#mobileMenu > ul > li {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-18px);
+    transition:
+        opacity 450ms ease,
+        transform 550ms cubic-bezier(.22, 1, .36, 1);
+    transition-delay: 0ms;
+}
+
+#mobileMenu.is-open > ul > li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#mobileMenu.is-open > ul > li:nth-child(1) { transition-delay: 120ms; }
+#mobileMenu.is-open > ul > li:nth-child(2) { transition-delay: 180ms; }
+#mobileMenu.is-open > ul > li:nth-child(3) { transition-delay: 240ms; }
+#mobileMenu.is-open > ul > li:nth-child(4) { transition-delay: 300ms; }
+#mobileMenu.is-open > ul > li:nth-child(5) { transition-delay: 360ms; }
+#mobileMenu.is-open > ul > li:nth-child(6) { transition-delay: 420ms; }
+#mobileMenu.is-open > ul > li:nth-child(7) { transition-delay: 480ms; }
+#mobileMenu.is-open > ul > li:nth-child(8) { transition-delay: 540ms; }
+#mobileMenu.is-open > ul > li:nth-child(9) { transition-delay: 600ms; }
+#mobileMenu.is-open > ul > li:nth-child(10) { transition-delay: 660ms; }
+
+.mobile-menu-link {
+    display: block;
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 12px;
+    color: #292524;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    transition: color .25s ease, background-color .25s ease, transform .25s ease;
+}
+
+.mobile-menu-link:hover {
+    background: #ffefde;
+    color: #5b3025;
+    transform: scale(1.025);
+}
+
+.mobile-menu-link:active {
+    transform: scale(.97);
+}
+
+.mobile-menu-cta a {
+    box-shadow: 0 8px 20px rgba(91, 48, 37, .15);
+    transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+}
+
+.mobile-menu-cta a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(91, 48, 37, .22);
+}
+
+body.mobile-menu-open {
+    overflow: hidden !important;
+}
+
+@media (max-width: 380px) {
+    #mobileMenu { padding-inline: 16px; }
+    #mobileMenu > ul { padding-top: 75px; }
+    .mobile-menu-link { font-size: 16px; padding: 11px 16px; }
+}
+
+/* =========================================
+   PARALLAX SUPPORT
+   JS updates --parallax-y with requestAnimationFrame.
+========================================= */
+
+[data-parallax],
+.appointment-image {
+    translate: 0 var(--parallax-y, 0px);
+}
+
+/* =========================================
+   NUMBER COUNTER
+========================================= */
+
+[data-counter] {
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   BEFORE / AFTER COMPARISON COMPONENT
+========================================= */
+
+.before-after {
+    --before-after-position: 50%;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #e7ded7;
+    isolation: isolate;
+    touch-action: pan-y;
+}
+
+.before-after__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+}
+
+.before-after__before {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    clip-path: inset(0 calc(100% - var(--before-after-position)) 0 0);
+}
+
+.before-after__divider {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    left: var(--before-after-position);
+    width: 2px;
+    background: #fff;
+    transform: translateX(-50%);
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+}
+
+.before-after__divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #5b3025;
+    color: #fff;
+    font-size: 22px;
+    transform: translate(-50%, -50%);
+}
+
+.before-after__label {
+    position: absolute;
+    z-index: 5;
+    bottom: 14px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: rgba(30, 20, 17, .72);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.before-after__label--before { left: 14px; }
+.before-after__label--after { right: 14px; }
+
+.before-after__range {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    direction: ltr;
+}
+
+.before-after__range:focus-visible {
+    opacity: 1;
+    outline: 3px solid #c98a6a;
+    outline-offset: -5px;
+}
+
+@media (max-width: 640px) {
+    .before-after {
+        aspect-ratio: 4 / 3;
+        border-radius: 14px;
+    }
+
+    .before-after__divider span {
+        width: 36px;
+        height: 36px;
+        font-size: 19px;
+    }
+}
+
+/* =========================================
+   BACK TO TOP
+========================================= */
+
+.back-to-top {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 9000;
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: #5b3025;
+    color: #fff;
+    font-size: 25px;
+    line-height: 1;
+    box-shadow: 0 8px 22px rgba(45, 25, 20, .2);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity .3s ease, visibility .3s ease, transform .3s ease, background-color .3s ease;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #734034;
+    transform: translateY(-4px);
+}
+
+@media (max-width: 640px) {
+    .back-to-top {
+        left: 16px;
+        bottom: 16px;
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* =========================================
+   CURSOR GLOW (desktop fine pointers only)
+========================================= */
+
+.cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(circle, rgba(201, 138, 106, .16) 0%, rgba(201, 138, 106, .07) 34%, rgba(201, 138, 106, 0) 72%);
+    transition: opacity .35s ease;
+    will-change: transform;
+}
+
+.cursor-glow.is-active {
+    opacity: 1;
+}
+
+/* =========================================
+   PAGE LOADING TRANSITION
+========================================= */
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: grid;
+    place-items: center;
+    background: #fffaf6;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .55s ease, visibility .55s ease;
+}
+
+.page-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.page-loader__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #5b3025;
+}
+
+.page-loader__icon {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    place-items: center;
+    border-radius: 18px;
+    background: #5b3025;
+    color: #fff;
+    font-size: 30px;
+    animation: loaderScissors 1.2s ease-in-out infinite alternate;
+}
+
+.page-loader__brand {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.page-loader__line {
+    display: block;
+    width: 110px;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: #ead9cf;
+}
+
+.page-loader__line::after {
+    content: "";
+    display: block;
+    width: 45%;
+    height: 100%;
+    border-radius: inherit;
+    background: #b9866d;
+    animation: loaderProgress 1.1s ease-in-out infinite;
+}
+
+@keyframes loaderScissors {
+    from { transform: translateY(0) rotate(-5deg); }
+    to { transform: translateY(-5px) rotate(5deg); }
+}
+
+@keyframes loaderProgress {
+    from { transform: translateX(230%); }
+    to { transform: translateX(-230%); }
+}
+
+/* =========================================
+   ACCESSIBILITY + PERFORMANCE
+========================================= */
+
+@media (hover: none), (pointer: coarse) {
+    .cursor-glow { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root,
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .appointment-image {
+        animation: none !important;
+    }
+}
+
+
+/* ==================================================
+   BARBER HOUSE HOME SECTIONS: LUXURY MOTION POLISH
+   These rules complement the existing animation bundle.
+================================================== */
+
+/* Hero: safe sizing, visible fallback, cinematic zoom and text reveal */
+.heroSwiper {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    height: min(100svh, 900px);
+    min-height: 520px;
+    overflow: hidden;
+    isolation: isolate;
+    background: #100d0b;
+}
+
+.heroSwiper .swiper-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.heroSwiper .swiper-slide {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #100d0b;
+}
+
+/* Support both the new hero-image class and the original bare img markup. */
+.heroSwiper .swiper-slide > img,
+.heroSwiper .swiper-slide .hero-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.04);
+    transform-origin: center;
+    will-change: transform;
+}
+
+.heroSwiper .swiper-slide-active > img,
+.heroSwiper .swiper-slide-active .hero-image {
+    animation: barberHeroCinematicZoom 7s ease-out both;
+}
+
+@keyframes barberHeroCinematicZoom {
+    from { transform: scale(1.04); }
+    to { transform: scale(1.13); }
+}
+
+/* Support both the new hero-overlay and the original overlay class. */
+.heroSwiper .hero-overlay,
+.heroSwiper .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        270deg,
+        rgba(12, 8, 6, .78) 0%,
+        rgba(12, 8, 6, .48) 48%,
+        rgba(12, 8, 6, .20) 100%
+    );
+}
+
+/* Support both the new hero-content and the original content class. */
+.heroSwiper .hero-content,
+.heroSwiper .content {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    z-index: 2;
+    width: min(84%, 680px);
+    color: #fff;
+    text-align: right;
+    transform: translateY(-50%);
+}
+
+/* Keep text visible even if Swiper JS fails; animate only after activation. */
+.heroSwiper .hero-content h1,
+.heroSwiper .hero-content p,
+.heroSwiper .content h1,
+.heroSwiper .content p {
+    opacity: 1;
+    will-change: opacity, transform;
+}
+
+.heroSwiper .swiper-slide-active .hero-content h1,
+.heroSwiper .swiper-slide-active .content h1 {
+    animation: barberHeroTextReveal .85s cubic-bezier(.22, 1, .36, 1) .18s both;
+}
+
+.heroSwiper .swiper-slide-active .hero-content p,
+.heroSwiper .swiper-slide-active .content p {
+    animation: barberHeroTextReveal .85s cubic-bezier(.22, 1, .36, 1) .34s both;
+}
+
+@keyframes barberHeroTextReveal {
+    from { opacity: 0; transform: translateY(26px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.heroSwiper .hero-content h1,
+.heroSwiper .content h1 {
+    margin-bottom: 16px;
+    font-size: clamp(2rem, 5vw, 4.3rem);
+    line-height: 1.25;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, .25);
+}
+
+.heroSwiper .hero-content p,
+.heroSwiper .content p {
+    max-width: 590px;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    line-height: 1.9;
+    color: rgba(255, 255, 255, .94);
+}
+
+.heroSwiper .swiper-button-next,
+.heroSwiper .swiper-button-prev {
+    z-index: 5;
+    width: 46px !important;
+    height: 46px !important;
+    padding: 0 !important;
+    margin-top: -23px;
+    border: 1px solid rgba(255, 255, 255, .60);
+    border-radius: 50%;
+    background: rgba(20, 14, 11, .30);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    transition: background-color .25s ease, transform .25s ease, border-color .25s ease;
+}
+
+.heroSwiper .swiper-button-next::after,
+.heroSwiper .swiper-button-prev::after {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.heroSwiper .swiper-button-next:hover,
+.heroSwiper .swiper-button-prev:hover {
+    transform: scale(1.08);
+    border-color: #fff;
+    background: rgba(91, 48, 37, .82);
+}
+
+/* Static fallback: first slide remains visible if the JS bundle does not load. */
+.heroSwiper:not(.swiper-initialized) .swiper-wrapper {
+    transform: none !important;
+}
+
+.heroSwiper:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .heroSwiper {
+        height: 88vh;
+        height: min(88svh, 760px);
+        min-height: 480px;
+    }
+
+    .heroSwiper .hero-overlay,
+    .heroSwiper .overlay {
+        background: linear-gradient(
+            0deg,
+            rgba(12, 8, 6, .80) 0%,
+            rgba(12, 8, 6, .48) 62%,
+            rgba(12, 8, 6, .28) 100%
+        );
+    }
+
+    .heroSwiper .hero-content,
+    .heroSwiper .content {
+        right: 6%;
+        left: 6%;
+        width: auto;
+        text-align: center;
+    }
+
+    .heroSwiper .hero-content h1,
+    .heroSwiper .content h1 {
+        margin-bottom: 12px;
+        font-size: clamp(1.9rem, 8vw, 3rem);
+    }
+
+    .heroSwiper .hero-content p,
+    .heroSwiper .content p {
+        margin-inline: auto;
+        max-width: 34rem;
+        font-size: 1rem;
+    }
+
+    .heroSwiper .swiper-button-next,
+    .heroSwiper .swiper-button-prev {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .heroSwiper .swiper-button-next::after,
+    .heroSwiper .swiper-button-prev::after {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    .heroSwiper {
+        min-height: 460px;
+    }
+
+    .heroSwiper .swiper-button-next,
+    .heroSwiper .swiper-button-prev {
+        display: none;
+    }
+}
+
+/* Scroll reveal: small movement, not a distracting entrance */
+html.motion-ready [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition:
+        opacity .75s ease,
+        transform .85s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+html.motion-ready [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* The reveal observer only handles elements once; don't leave hidden content if scripts fail. */
+@media (prefers-reduced-motion: reduce) {
+    html.motion-ready [data-reveal],
+    html.motion-ready [data-reveal].is-revealed {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* About image: elegant frame and stable image parallax */
+.about-image-frame {
+    overflow: hidden;
+    border-radius: 24px;
+    background: #ead9cf;
+    box-shadow: 0 20px 48px rgba(91, 48, 37, .13);
+}
+
+.about-image-frame img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    transition: filter .6s ease;
+}
+
+.about-image-frame:hover img {
+    filter: saturate(1.06);
+}
+
+/* Appointment image remains zoomed while JS applies parallax through CSS translate. */
+#appointment {
+    min-height: 78svh;
+    isolation: isolate;
+}
+
+#appointment .appointment-copy {
+    text-shadow: 0 3px 24px rgba(0, 0, 0, .30);
+}
+
+/* Services: the current data contains an icon placeholder, not a service image.
+   Zoom the art layer without inventing a database image field. */
+.service-card {
+    isolation: isolate;
+    box-shadow: 0 14px 34px rgba(70, 37, 28, .12);
+    transition: box-shadow .5s ease, transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+
+.service-card__art {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(1);
+    transition: transform .85s cubic-bezier(.22, 1, .36, 1), filter .85s ease;
+}
+
+.service-card__art i {
+    filter: drop-shadow(0 7px 15px rgba(0, 0, 0, .17));
+    transition: transform .7s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 22px 42px rgba(70, 37, 28, .20);
+    }
+
+    .service-card:hover .service-card__art {
+        transform: scale(1.12);
+        filter: saturate(1.08);
+    }
+
+    .service-card:hover .service-card__art i {
+        transform: scale(1.06);
+    }
+}
+
+/* Price cards */
+.price-card {
+    overflow: hidden;
+    border-radius: 1.15rem;
+    border: 1px solid #eaded8;
+    background: #fffdfb;
+    box-shadow: 0 5px 18px rgba(91, 48, 37, .045);
+    transition: border-color .3s ease, box-shadow .35s ease, transform .35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .price-card:hover {
+        transform: translateY(-4px);
+        border-color: #d7b6a5;
+        box-shadow: 0 16px 34px rgba(91, 48, 37, .10);
+    }
+}
+
+/* Why-us cards */
+.benefit-card {
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .benefit-card:hover {
+        transform: translateY(-6px);
+        border-color: #d7b6a5;
+        box-shadow: 0 18px 36px rgba(91, 48, 37, .09);
+    }
+}
+
+/* Booking form: focus and button micro-interactions */
+#booking select,
+#booking input,
+#booking textarea,
+#booking button {
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background-color .25s ease,
+        color .25s ease,
+        transform .25s ease;
+}
+
+#booking select:focus-visible,
+#booking input:focus-visible,
+#booking textarea:focus-visible,
+#booking button:focus-visible {
+    outline: 3px solid rgba(201, 138, 106, .32);
+    outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #booking button:not(:disabled):not(.booking-modal-close):hover {
+        border-color: #c98a6a;
+    }
+
+    #booking .booking-submit:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(91, 48, 37, .18);
+    }
+}
+
+#booking button:active:not(:disabled) {
+    transform: scale(.985);
+}
+
+/* Livewire modal entrance */
+.booking-modal-backdrop {
+    animation: bookingBackdropIn .22s ease both;
+}
+
+.booking-modal-panel {
+    animation: bookingPanelIn .34s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes bookingBackdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bookingPanelIn {
+    from { opacity: 0; transform: translateY(18px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .heroSwiper .swiper-slide-active .hero-image,
+    .heroSwiper .swiper-slide-active .hero-content h1,
+    .heroSwiper .swiper-slide-active .hero-content p {
+        animation: none !important;
+    }
+
+    .heroSwiper .hero-content h1,
+    .heroSwiper .hero-content p {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+
+/* Livewire booking enters with CSS-only motion. Keep it out of the JS reveal observer
+   so a Livewire DOM morph cannot remove the revealed state and hide the form again. */
+.booking-heading,
+.booking-guest-card,
+.booking-success,
+.booking-main-card {
+    animation: bookingContentEnter .7s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.booking-guest-card,
+.booking-success,
+.booking-main-card {
+    animation-delay: 90ms;
+}
+
+@keyframes bookingContentEnter {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   PIXABAY PHOTO CARDS
+   Images are downloaded locally by `php artisan barber:images:sync`.
+========================================= */
+
+.service-card.service-card--photo {
+    width: 100%;
+    max-width: 390px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    margin-inline: auto;
+    border-radius: 24px;
+    background: #2b1b16;
+    box-shadow: 0 18px 42px rgba(47, 27, 20, .16);
+}
+
+.service-card--photo .service-card__image,
+.service-card--photo .service-card__fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+}
+
+.service-card--photo .service-card__image {
+    transform: scale(1);
+    filter: saturate(.88) contrast(1.03);
+    transition: transform .9s cubic-bezier(.22, 1, .36, 1), filter .9s ease;
+}
+
+.service-card--photo .overlay {
+    inset: auto 0 0;
+    min-height: 44%;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: clamp(1.1rem, 4vw, 1.6rem);
+    text-align: right;
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 12, 10, .68) 35%, rgba(18, 12, 10, .96) 100%);
+}
+
+.service-card--photo .overlay h3 {
+    margin: 0;
+    color: #fff7ef;
+    font-family: inherit;
+    font-size: clamp(1.2rem, 2vw, 1.65rem);
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.service-card--photo .overlay span:not(.service-card__eyebrow) {
+    margin-top: .5rem;
+    color: #e5bd9b;
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.service-card--photo .overlay .service-card__eyebrow {
+    margin-bottom: .55rem;
+    color: #d6a77f;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    direction: ltr;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .service-card--photo:hover .service-card__image {
+        transform: scale(1.1);
+        filter: saturate(1.08) contrast(1.04);
+    }
+}
+
+.price-card__media {
+    position: relative;
+    min-height: 190px;
+    overflow: hidden;
+    isolation: isolate;
+    background: #35221b;
+}
+
+.price-card__media > img,
+.price-card__placeholder,
+.price-card__image-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.price-card__media > img {
+    object-fit: cover;
+    transition: transform .85s cubic-bezier(.22, 1, .36, 1);
+}
+
+.price-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.price-card__image-shade {
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(20, 13, 10, .02) 12%, rgba(20, 13, 10, .78) 100%);
+}
+
+.price-card__media h3 {
+    position: absolute;
+    z-index: 2;
+    inset-inline: 1.35rem;
+    bottom: 1.2rem;
+    margin: 0;
+    color: #fff7ef;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .price-card:hover .price-card__media > img {
+        transform: scale(1.07);
+    }
+}
+
+.barber-image-credit {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: .25rem auto 0;
+    color: #98715d;
+    font-size: .68rem;
+    line-height: 1.4;
+    text-decoration: underline;
+    text-decoration-color: rgba(152, 113, 93, .35);
+    text-underline-offset: 2px;
+}
+
+.barber-image-credit:hover {
+    color: #6d3e2d;
+}
+
+.barber-image-credit--overlay {
+    position: absolute;
+    z-index: 12;
+    inset-inline-end: 14px;
+    bottom: 10px;
+    margin: 0;
+    padding: 3px 7px;
+    border-radius: 5px;
+    color: rgba(255, 247, 239, .82);
+    background: rgba(15, 10, 8, .45);
+    font-size: .58rem;
+    text-decoration-color: rgba(255, 247, 239, .4);
+}
+
+.barber-image-credit--overlay:hover {
+    color: #fff;
+}
+
+@media (max-width: 640px) {
+    .service-card.service-card--photo {
+        max-width: 420px;
+        aspect-ratio: 5 / 4;
+        border-radius: 20px;
+    }
+
+    .price-card__media {
+        min-height: 165px;
+    }
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   BARBER HOUSE - PREMIUM CARDS
+========================================== */
+
+.service-card {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid rgba(201, 138, 106, .25);
+    border-radius: 24px;
+    background: #241813;
+    box-shadow: 0 15px 35px rgba(45, 32, 28, .12);
+    transition:
+        transform .55s cubic-bezier(.22, 1, .36, 1),
+        box-shadow .55s ease;
+}
+
+.service-card__art {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.service-card__art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        transform 1s cubic-bezier(.2, .7, .2, 1),
+        filter .8s ease;
+}
+
+.service-card .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 26px 24px;
+    text-align: right;
+    background: linear-gradient(
+        180deg,
+        transparent 15%,
+        rgba(20, 13, 10, .15) 40%,
+        rgba(20, 13, 10, .92) 100%
+    );
+    transition: background .5s ease;
+}
+
+.service-card .overlay h3 {
+    margin: 8px 0 0;
+    color: #fff8f0;
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(21px, 2vw, 27px);
+    font-weight: 800;
+}
+
+.service-card__eyebrow {
+    color: #e6b58d;
+    font-size: 10px;
+    letter-spacing: 2px;
+    direction: ltr;
+}
+
+.service-card__price {
+    margin-top: 12px;
+    padding: 7px 13px;
+    border: 1px solid rgba(220, 171, 132, .45);
+    border-radius: 30px;
+    background: rgba(75, 43, 31, .75);
+    color: #f5d6bd;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 55px rgba(45, 32, 28, .25);
+    }
+
+    .service-card:hover .service-card__art img {
+        transform: scale(1.12);
+        filter: saturate(1.1);
+    }
+}
+
+/* Pricing cards */
+
+.price-card {
+    overflow: hidden;
+    border: 1px solid #eadbd0;
+    border-radius: 22px;
+    background: #fffdfa;
+    box-shadow: 0 8px 25px rgba(45, 32, 28, .06);
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .price-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(45, 32, 28, .13);
+    }
+
+    .price-card__cover img {
+        transition: transform .8s ease;
+    }
+
+    .price-card:hover .price-card__cover img {
+        transform: scale(1.09);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+    .service-card {
+        max-width: 420px;
+        border-radius: 20px;
+        aspect-ratio: 4 / 4.5;
+    }
+
+    .service-card .overlay {
+        padding: 20px;
+    }
+}
+/* ==========================================
+   HERO SLIDER - MINIMAL NAVIGATION
+========================================== */
+
+.heroSwiper .swiper-button-next,
+.heroSwiper .swiper-button-prev {
+    width: 36px !important;
+    height: 36px !important;
+    margin-top: -18px !important;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 50%;
+    background: rgba(30, 20, 15, .38);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    opacity: .8;
+    transition: all .3s ease;
+}
+
+.heroSwiper .swiper-button-next::after,
+.heroSwiper .swiper-button-prev::after {
+    font-size: 11px !important;
+    font-weight: 700;
+}
+
+.heroSwiper .swiper-button-next {
+    right: 24px !important;
+}
+
+.heroSwiper .swiper-button-prev {
+    left: 24px !important;
+}
+
+.heroSwiper .swiper-button-next:hover,
+.heroSwiper .swiper-button-prev:hover {
+    opacity: 1;
+    transform: scale(1.08);
+    border-color: #d7aa70;
+    background: rgba(91, 48, 37, .85);
+}
+
+@media (max-width: 768px) {
+    .heroSwiper .swiper-button-next,
+    .heroSwiper .swiper-button-prev {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .heroSwiper .swiper-button-next::after,
+    .heroSwiper .swiper-button-prev::after {
+        font-size: 9px !important;
+    }
+
+    .heroSwiper .swiper-button-next {
+        right: 12px !important;
+    }
+
+    .heroSwiper .swiper-button-prev {
+        left: 12px !important;
+    }
+}
+
+/* ==========================================
+   SCROLL REVEAL
+========================================== */
+
+html.motion-ready [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+        opacity .8s ease,
+        transform .9s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.motion-ready [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Keep reveal and zoom animations enabled when OS Reduce Motion is active,
+   as explicitly requested for this website. */
+
+@media (prefers-reduced-motion: reduce) {
+    html.motion-ready [data-reveal] {
+        opacity: 0;
+        transform: translate3d(0, 28px, 0);
+        transition: opacity .8s ease, transform .9s ease;
+    }
+
+    html.motion-ready [data-reveal].is-revealed {
+        opacity: 1;
+        transform: none;
+    }
+
+    .appointment-image {
+        animation: zoomLoop 16s ease-in-out infinite alternate !important;
+    }
+
+    .heroSwiper .swiper-slide-active .hero-image {
+        animation: barberHeroCinematicZoom 7s ease-out both !important;
+    }
+}
+
+/* Customer booking details dialog: keep its controls visible on short screens. */
+.booking-details-overlay {
+    overscroll-behavior: contain;
+}
+
+.booking-details-dialog {
+    max-height: calc(100vh - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+}
+
+.booking-details-header,
+.booking-details-footer {
+    flex: 0 0 auto;
+}
+
+.booking-details-body {
+    flex: 1 1 auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+@media (max-height: 650px) {
+    .booking-details-dialog {
+        max-height: calc(100vh - 1rem);
+        max-height: calc(100dvh - 1rem);
+    }
+
+    .booking-details-body {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
+}
+
+
+/* =========================================
+   AUTH PAGES: HEADER CLEARANCE + COMPACT NAV
+========================================= */
+
+body.auth-layout {
+    --auth-header-height: 68px;
+}
+
+body.auth-layout #navbar {
+    background: rgba(255, 255, 255, .98) !important;
+    color: #111827 !important;
+    box-shadow: 0 6px 24px rgba(41, 31, 26, .08);
+    backdrop-filter: blur(14px);
+}
+
+body.auth-layout #navbar .navbar-container {
+    min-height: var(--auth-header-height);
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+body.auth-layout #navbar .logo {
+    height: 44px;
+    max-width: min(42vw, 170px);
+}
+
+body.auth-layout #navbar #menuBtn {
+    color: #5b3025 !important;
+}
+
+body.auth-layout #navbar + section {
+    box-sizing: border-box;
+    padding-top: calc(var(--auth-header-height) + 16px) !important;
+    scroll-margin-top: calc(var(--auth-header-height) + 16px);
+}
+
+body.auth-layout #navbar + section .min-h-screen {
+    min-height: calc(100svh - var(--auth-header-height) - 16px) !important;
+}
+
+@media (min-width: 640px) {
+    body.auth-layout {
+        --auth-header-height: 72px;
+    }
+
+    body.auth-layout #navbar .logo {
+        height: 48px;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.auth-layout {
+        --auth-header-height: 76px;
+    }
+
+    body.auth-layout #navbar .navbar-container {
+        min-height: var(--auth-header-height);
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    body.auth-layout #navbar .logo {
+        height: 50px;
+    }
+}
+
+@media (max-width: 380px) {
+    body.auth-layout #navbar .navbar-container {
+        padding-inline: 12px;
+    }
+
+    body.auth-layout #navbar .logo {
+        height: 40px;
+        max-width: 145px;
+    }
+}
