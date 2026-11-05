@@ -56,9 +56,13 @@ class User extends Authenticatable
 protected function avatar(): Attribute
 {
     return Attribute::make(
-        // Return null when no custom avatar exists so the UI can show initials
-        // instead of requesting an image that may not exist in public/images.
-        get: fn ($value) => $value ? asset('storage/' . $value) : null,
+        get: fn ($value) => $value
+            ? (
+                filter_var($value, FILTER_VALIDATE_URL)
+                    ? $value
+                    : asset('storage/' . $value)
+            )
+            : null,
     );
 }
 }

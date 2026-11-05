@@ -25,6 +25,14 @@
                         {{ session('status') }}
                     </div>
                 @endif
+                @if (session('error'))
+    <div
+        role="alert"
+        class="mb-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-6 text-red-700"
+    >
+        {{ session('error') }}
+    </div>
+@endif
 
                 <form action="{{ route('login') }}" method="POST" class="space-y-5">
 
@@ -112,6 +120,7 @@
 
                 </form>
 
+                <x-auth.google-button />
                 {{-- Register Link --}}
                 <div class="mt-7 text-center">
 

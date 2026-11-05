@@ -153,6 +153,10 @@
                 </span>
             @endif
         </a>
+
+        <a href="{{ route('customer.google.redirect') }}">
+    <span>Continue with Google</span>
+</a>
     </div>
 
     {{-- Login Card --}}

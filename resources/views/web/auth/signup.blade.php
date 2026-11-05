@@ -135,6 +135,7 @@
 
                 </form>
 
+                <x-auth.google-button />
                 {{-- Login Link --}}
                 <div class="mt-7 text-center">
 

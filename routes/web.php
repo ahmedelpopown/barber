@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Auth\CustomerGoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PasswordChangeRequestController;
@@ -15,7 +16,18 @@ use Illuminate\Support\Facades\Route;
 | Public
 |--------------------------------------------------------------------------
 */
+    Route::view('/project-demo', 'demo')
+        ->name('project.demo');
 
+Route::get(
+    '/auth/google/redirect',
+    [CustomerGoogleAuthController::class, 'redirect']
+)->name('customer.google.redirect');
+
+Route::get(
+    '/auth/google/callback',
+    [CustomerGoogleAuthController::class, 'callback']
+)->name('customer.google.callback');
 
  Route::get('/', HomeController::class)->name('home');
 
